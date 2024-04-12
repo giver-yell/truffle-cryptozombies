@@ -13,7 +13,7 @@ contract ZombieHelper is ZombieFeeding {
   }
 
   function withdraw() external onlyOwner {
-    address _owner = owner();
+    address payable _owner = payable(owner());
     _owner.transfer(address(this).balance);
   }
 
@@ -23,7 +23,7 @@ contract ZombieHelper is ZombieFeeding {
 
   function levelUp(uint _zombieId) external payable {
     require(msg.value == levelUpFee);
-    zombies[_zombieId].level = zombies[_zombieId].level.add(1);
+    zombies[_zombieId].level = uint32(zombies[_zombieId].level + 1);
   }
 
   function changeName(uint _zombieId, string calldata _newName) external aboveLevel(2, _zombieId) onlyOwnerOf(_zombieId) {
